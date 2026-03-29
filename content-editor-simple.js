@@ -52,7 +52,7 @@
                 hero: {
                     title: 'Ваша реклама в каждом лифте города',
                     subtitle: 'Размещение рекламы в лифтах',
-                    heroImage: null
+                    heroImage: 'img/lift.png'
                 },
                 footer: { companyName: 'ООО «МОЙ ГОРОД»', phone: '+7 949 338 78 33', email: 'info@moigorod.ru', address: 'г. Донецк, ДНР' },
                 whyWorks: {
@@ -142,6 +142,9 @@
                 '<input type="text" id="hero-title" value="' + (hero.title || '') + '" style="' + inp + '"></div>' +
                 '<div style="margin-bottom:14px"><label style="display:block;margin-bottom:6px;font-weight:600;color:#374151;font-size:13px">Подзаголовок</label>' +
                 '<textarea id="hero-subtitle" rows="2" style="' + inp + 'resize:vertical">' + (hero.subtitle || '') + '</textarea></div>' +
+                '<div style="margin-bottom:14px"><label style="display:block;margin-bottom:6px;font-weight:600;color:#374151;font-size:13px">Файл баннера из папки img</label>' +
+                '<input type="text" id="hero-image-file" value="' + ((hero.heroImage && !hero.heroImage.startsWith('data:')) ? hero.heroImage : '') + '" placeholder="img/lift.png" style="' + inp + '">' +
+                '<div style="margin-top:6px;color:#6b7280;font-size:12px">Пример: <code>img/lift.png</code> или <code>img/banner.jpg</code></div></div>' +
                 imgUploadControl('hero-image', hero.heroImage, 'Баннер/фото под заголовком (отображается в hero-секции)') +
                 '</div>' +
 
@@ -284,6 +287,12 @@
                     self._content.hero = self._content.hero || {};
                     self._content.hero.title = (document.getElementById('hero-title') || {}).value || '';
                     self._content.hero.subtitle = (document.getElementById('hero-subtitle') || {}).value || '';
+
+                    const heroImageFileInput = document.getElementById('hero-image-file');
+                    const heroImageFile = heroImageFileInput ? heroImageFileInput.value.trim() : '';
+                    if (heroImageFile) {
+                        self._content.hero.heroImage = heroImageFile;
+                    }
 
                     self._content.footer = self._content.footer || {};
                     self._content.footer.companyName = (document.getElementById('footer-company') || {}).value || '';
