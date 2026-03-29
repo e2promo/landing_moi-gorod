@@ -132,6 +132,33 @@
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
+.admin-entry-link {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #111827 0%, #374151 100%);
+    box-shadow: 0 4px 12px rgba(17, 24, 39, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-entry-link:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 18px rgba(17, 24, 39, 0.38);
+}
+
+.admin-entry-link:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.admin-entry-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
 .phone-icon {
     font-size: 1.2rem;
 }
@@ -218,6 +245,11 @@
 
     .header-contact {
         display: none;
+    }
+
+    .admin-entry-link {
+        margin-left: auto;
+        margin-right: 8px;
     }
 }
 
