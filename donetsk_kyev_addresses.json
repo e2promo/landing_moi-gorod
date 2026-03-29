@@ -1,0 +1,391 @@
+{
+  "rows": 101,
+  "unique": 35,
+  "addresses": [
+    {
+      "id": 1,
+      "address": "ул. Артема, д. 102 б",
+      "lifts": 2,
+      "coords": [
+        48.019132,
+        37.799966
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 102Б",
+      "manualReview": false
+    },
+    {
+      "id": 2,
+      "address": "ул. Артема, д. 102",
+      "lifts": 2,
+      "coords": [
+        48.01906,
+        37.800901
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 102",
+      "manualReview": false
+    },
+    {
+      "id": 3,
+      "address": "ул. Артема, д. 116 а",
+      "lifts": 4,
+      "coords": [
+        48.028449,
+        37.790848
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 116А",
+      "manualReview": false
+    },
+    {
+      "id": 4,
+      "address": "ул. Артема, д. 118 а",
+      "lifts": 4,
+      "coords": [
+        48.029569,
+        37.789456
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 118А",
+      "manualReview": false
+    },
+    {
+      "id": 5,
+      "address": "ул. Артема, д. 132",
+      "lifts": 4,
+      "coords": [
+        48.03198,
+        37.787013
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 132",
+      "manualReview": false
+    },
+    {
+      "id": 6,
+      "address": "ул. Артема, д. 134",
+      "lifts": 2,
+      "coords": [
+        48.032359,
+        37.786492
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 134",
+      "manualReview": false
+    },
+    {
+      "id": 7,
+      "address": "ул. Артема, д. 144 а",
+      "lifts": 2,
+      "coords": [
+        48.035052,
+        37.782584
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 144А",
+      "manualReview": false
+    },
+    {
+      "id": 8,
+      "address": "ул. Артема, д. 147 а",
+      "lifts": 1,
+      "coords": [
+        48.021784,
+        37.800451
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 147А",
+      "manualReview": false
+    },
+    {
+      "id": 9,
+      "address": "ул. Артема, д. 147 б",
+      "lifts": 2,
+      "coords": [
+        48.022302,
+        37.800029
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 147Б",
+      "manualReview": false
+    },
+    {
+      "id": 10,
+      "address": "ул. Артема, д. 147 в",
+      "lifts": 1,
+      "coords": [
+        48.022826,
+        37.799607
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 147В",
+      "manualReview": false
+    },
+    {
+      "id": 11,
+      "address": "ул. Артема, д. 147 г",
+      "lifts": 2,
+      "coords": [
+        48.023218,
+        37.799284
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 147Г",
+      "manualReview": false
+    },
+    {
+      "id": 12,
+      "address": "ул. Артема, д. 151а",
+      "lifts": 4,
+      "coords": [
+        48.024453,
+        37.798673
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 151А",
+      "manualReview": false
+    },
+    {
+      "id": 13,
+      "address": "ул. Артема, д. 181 а",
+      "lifts": 3,
+      "coords": [
+        48.039468,
+        37.77113
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 181А",
+      "manualReview": false
+    },
+    {
+      "id": 14,
+      "address": "ул. Артема, д. 181 б",
+      "lifts": 5,
+      "coords": [
+        48.038938,
+        37.77184
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 181Б",
+      "manualReview": false
+    },
+    {
+      "id": 15,
+      "address": "ул. Артема, д. 185 а",
+      "lifts": 5,
+      "coords": [
+        48.039065,
+        37.770421
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 185А",
+      "manualReview": false
+    },
+    {
+      "id": 16,
+      "address": "ул. Артема, д. 187",
+      "lifts": 3,
+      "coords": [
+        48.039926,
+        37.771705
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 187",
+      "manualReview": false
+    },
+    {
+      "id": 17,
+      "address": "ул. Артема, д. 189",
+      "lifts": 4,
+      "coords": [
+        48.039426,
+        37.772406
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 189",
+      "manualReview": false
+    },
+    {
+      "id": 18,
+      "address": "ул. Артема, д. 193 в",
+      "lifts": 3,
+      "coords": [
+        48.038739,
+        37.766827
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 193В",
+      "manualReview": false
+    },
+    {
+      "id": 19,
+      "address": "ул. Челюскинцев, д. 212 а",
+      "lifts": 1,
+      "coords": [
+        48.026834,
+        37.799463
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 212А",
+      "manualReview": false
+    },
+    {
+      "id": 20,
+      "address": "ул. Челюскинцев, д. 212",
+      "lifts": 1,
+      "coords": [
+        48.026466,
+        37.799535
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 212",
+      "manualReview": false
+    },
+    {
+      "id": 21,
+      "address": "ул. Челюскинцев, д. 263",
+      "lifts": 4,
+      "coords": [
+        48.033167,
+        37.790588
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 263",
+      "manualReview": false
+    },
+    {
+      "id": 22,
+      "address": "ул. Челюскинцев, д. 265",
+      "lifts": 2,
+      "coords": [
+        48.033673,
+        37.790794
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 265",
+      "manualReview": false
+    },
+    {
+      "id": 23,
+      "address": "ул. Челюскинцев, д. 267/269",
+      "lifts": 4,
+      "coords": [
+        48.035034,
+        37.790561
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 267",
+      "manualReview": false
+    },
+    {
+      "id": 24,
+      "address": "ул. Челюскинцев, д. 271",
+      "lifts": 2,
+      "coords": [
+        48.034727,
+        37.790004
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 271",
+      "manualReview": false
+    },
+    {
+      "id": 25,
+      "address": "ул. Челюскинцев, д. 275",
+      "lifts": 5,
+      "coords": [
+        48.033389,
+        37.788585
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Челюскинцев, 275",
+      "manualReview": false
+    },
+    {
+      "id": 26,
+      "address": "ул. Артема, д. 197 а",
+      "lifts": 2,
+      "coords": [
+        48.039896,
+        37.768651
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 197А",
+      "manualReview": false
+    },
+    {
+      "id": 27,
+      "address": "ул. Артема, д. 197 б",
+      "lifts": 2,
+      "coords": [
+        48.039583,
+        37.768453
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 197Б",
+      "manualReview": false
+    },
+    {
+      "id": 28,
+      "address": "ул. Артема, д. 197 г",
+      "lifts": 3,
+      "coords": [
+        48.039523,
+        37.7676
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Артёма, 197Г",
+      "manualReview": false
+    },
+    {
+      "id": 29,
+      "address": "пр. Титова, д. 8 а",
+      "lifts": 1,
+      "coords": [
+        48.015884,
+        37.80285
+      ],
+      "resolvedAddress": "Россия, Донецк",
+      "manualReview": true
+    },
+    {
+      "id": 30,
+      "address": "ул. Университетская, д. 56 а",
+      "lifts": 1,
+      "coords": [
+        48.017324,
+        37.798313
+      ],
+      "resolvedAddress": "Россия, Донецк, Университетская улица, 56А",
+      "manualReview": false
+    },
+    {
+      "id": 31,
+      "address": "ул. Университетская, д. 94 а",
+      "lifts": 3,
+      "coords": [
+        48.026303,
+        37.789384
+      ],
+      "resolvedAddress": "Россия, Донецк, Университетская улица, 94А",
+      "manualReview": false
+    },
+    {
+      "id": 32,
+      "address": "ул. Университетская, д. 116",
+      "lifts": 4,
+      "coords": [
+        48.033468,
+        37.78138
+      ],
+      "resolvedAddress": "Россия, Донецк, Университетская улица, 116",
+      "manualReview": false
+    },
+    {
+      "id": 33,
+      "address": "ул. Университетская, д. 118",
+      "lifts": 4,
+      "coords": [
+        48.034335,
+        37.781111
+      ],
+      "resolvedAddress": "Россия, Донецк, Университетская улица, 118",
+      "manualReview": false
+    },
+    {
+      "id": 34,
+      "address": "ул. Розы Люксембург, д. 103а",
+      "lifts": 3,
+      "coords": [
+        48.024008,
+        37.787327
+      ],
+      "resolvedAddress": "Россия, Донецк, улица Розы Люксембург, 103А",
+      "manualReview": false
+    },
+    {
+      "id": 35,
+      "address": "пр. Киевский, д. 2 а",
+      "lifts": 2,
+      "coords": [
+        48.008765,
+        37.867762
+      ],
+      "resolvedAddress": "Россия, ФГУП Железные дороги Новороссии, станция Донецк-2",
+      "manualReview": true
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест редактора контента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .test-result {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .test-result.error {
+            border-left-color: #f44336;
+        }
+
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Тест редактора контента</h1>
+    <div id="results"></div>
+
+    <script src="content-storage.js"></script>
+    <script src="content-editor.js"></script>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function addResult(title, status, details) {
+            const div = document.createElement('div');
+            div.className = 'test-result' + (status ? '' : ' error');
+            div.innerHTML = `
+                <h3>${status ? '✅' : '❌'} ${title}</h3>
+                ${details ? `<pre>${details}</pre>` : ''}
+            `;
+            results.appendChild(div);
+        }
+
+        // Test 1: ContentStorage loaded
+        if (typeof ContentStorage !== 'undefined') {
+            addResult('ContentStorage загружен', true);
+
+            // Test 2: Get content
+            try {
+                const content = ContentStorage.getContent();
+                addResult('ContentStorage.getContent() работает', true,
+                    `Получено секций: ${Object.keys(content).length}\n` +
+                    `Header phone: ${content.header.phone}\n` +
+                    `Hero title: ${content.hero.title}`
+                );
+            } catch (e) {
+                addResult('ContentStorage.getContent() ошибка', false, e.message);
+            }
+        } else {
+            addResult('ContentStorage НЕ загружен', false, 'window.ContentStorage = undefined');
+        }
+
+        // Test 3: ContentEditor loaded
+        if (typeof ContentEditor !== 'undefined') {
+            addResult('ContentEditor загружен', true);
+
+            // Test 4: Try to initialize
+            try {
+                // Create container
+                const container = document.createElement('div');
+                container.id = 'content-editor-container';
+                document.body.appendChild(container);
+
+                ContentEditor.init();
+
+                const hasContent = container.innerHTML.length > 0;
+                addResult('ContentEditor.init() выполнен', hasContent,
+                    hasContent ? `Сгенерировано ${container.innerHTML.length} символов HTML` : 'Контейнер пустой'
+                );
+
+                // Check for inputs
+                const inputs = container.querySelectorAll('input[data-path]');
+                addResult('Поля ввода созданы', inputs.length > 0,
+                    `Найдено ${inputs.length} полей ввода`
+                );
+
+            } catch (e) {
+                addResult('ContentEditor.init() ошибка', false, e.message + '\n' + e.stack);
+            }
+        } else {
+            addResult('ContentEditor НЕ загружен', false, 'window.ContentEditor = undefined');
+        }
+
+        // Test 5: Check localStorage
+        try {
+            const stored = localStorage.getItem('moigorod_content');
+            if (stored) {
+                const data = JSON.parse(stored);
+                addResult('localStorage содержит данные', true,
+                    `Размер: ${(stored.length / 1024).toFixed(2)} KB\n` +
+                    `Секций: ${Object.keys(data).length}`
+                );
+            } else {
+                addResult('localStorage пуст', true, 'Будут использованы данные по умолчанию');
+            }
+        } catch (e) {
+            addResult('localStorage ошибка', false, e.message);
+        }
+    </script>
+</body>
+
+</html>
