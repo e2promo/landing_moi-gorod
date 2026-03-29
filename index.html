@@ -68,8 +68,8 @@
                     Размещение рекламы в лифтах Донецка и Макеевки от 11 370 ₽/мес.<br>
                     Более 1000 рекламных плоскостей. Полный цикл: печать, монтаж, фотоотчет
                 </p>
-                <div class="hero-banner-wrap" id="hero-banner-wrap" style="display: none;">
-                    <img id="hero-banner-image" class="hero-banner-image" alt="Баннер компании">
+                <div class="hero-banner-wrap" id="hero-banner-wrap">
+                    <img id="hero-banner-image" class="hero-banner-image" src="img/lift.png" alt="Баннер компании">
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -677,16 +677,31 @@
                 }
 
                 // Update hero banner image
+                function resolveBannerPath(path) {
+                    if (!path) return 'img/lift.png';
+                    if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
+                        return path;
+                    }
+                    return path.replace(/^\.\//, '');
+                }
+
+                const heroBannerWrap = document.getElementById('hero-banner-wrap');
+                const heroBannerImage = document.getElementById('hero-banner-image');
+                if (heroBannerWrap && heroBannerImage) {
+                    heroBannerImage.onerror = function () {
+                        if (this.src.includes('/img/lift.png') || this.src.endsWith('img/lift.png')) {
+                            return;
+                        }
+                        this.src = 'img/lift.png';
+                    };
+                }
+
                 if (content.hero && content.hero.heroImage) {
-                    const heroBannerWrap = document.getElementById('hero-banner-wrap');
-                    const heroBannerImage = document.getElementById('hero-banner-image');
                     if (heroBannerWrap && heroBannerImage) {
-                        heroBannerImage.src = content.hero.heroImage;
+                        heroBannerImage.src = resolveBannerPath(content.hero.heroImage);
                         heroBannerWrap.style.display = 'block';
                     }
                 } else {
-                    const heroBannerWrap = document.getElementById('hero-banner-wrap');
-                    const heroBannerImage = document.getElementById('hero-banner-image');
                     if (heroBannerWrap && heroBannerImage) {
                         heroBannerImage.src = 'img/lift.png';
                         heroBannerWrap.style.display = 'block';
