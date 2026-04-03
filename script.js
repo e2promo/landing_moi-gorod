@@ -27,7 +27,7 @@ function handleMapUnavailable(reason) {
                 border: 1px dashed #d1d5db;
                 border-radius: 12px;
                 color: #374151;
-                font-family: Inter, sans-serif;
+                font-family: Manrope, sans-serif;
             ">
                 <div>
                     <div style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Карта временно недоступна</div>
@@ -92,7 +92,7 @@ function loadMarkers(city) {
             location.coords,
             {
                 balloonContent: `
-                    <div style="padding: 15px; font-family: Inter, sans-serif;">
+                    <div style="padding: 15px; font-family: Manrope, sans-serif;">
                         <strong style="color: #1f2937; font-size: 14px;">${location.address}</strong><br>
                         ${location.resolvedAddress ? `<span style="color:#6b7280;font-size:12px;display:block;margin-top:4px;">Геокодер: ${location.resolvedAddress}</span>` : ''}
                         ${location.manualReview ? `<span style="color:#b45309;font-size:12px;display:block;margin-top:4px;">⚠ Нужна ручная проверка адреса</span>` : ''}
@@ -598,10 +598,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Observe elements for fade-in animation
     const animatedElements = document.querySelectorAll('.benefit-card, .advantage-item, .price-card, .included-card');
-    animatedElements.forEach(el => {
+    animatedElements.forEach((el, index) => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+        el.style.transitionDelay = `${(index % 6) * 80}ms`;
         observer.observe(el);
     });
 });

@@ -9,7 +9,9 @@
         content="Эффективная реклама в лифтах от 11 370 руб/мес. Более 1000 рекламных плоскостей. Охват всего города. Печать, монтаж и фотоотчет включены.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://api-maps.yandex.ru/2.1/?apikey=c8356958-fe16-4a92-a1fa-0fe4f98c42cd&lang=ru_RU"
         type="text/javascript"></script>
@@ -69,7 +71,7 @@
                     Более 1000 рекламных плоскостей. Полный цикл: печать, монтаж, фотоотчет
                 </p>
                 <div class="hero-banner-wrap" id="hero-banner-wrap">
-                    <img id="hero-banner-image" class="hero-banner-image" src="img/lift.png" alt="Баннер компании">
+                    <img id="hero-banner-image" class="hero-banner-image" src="lift.png" alt="Баннер компании">
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -649,64 +651,59 @@
     <script src="script.js"></script>
 
     <script>
-        // Load custom content from storage
+        // Load custom content from storage (if available)
         document.addEventListener('DOMContentLoaded', function () {
-            if (typeof ContentStorage !== 'undefined') {
-                const content = ContentStorage.getContent();
+            // Update phone numbers in header/footer if ContentStorage exists
+            if (typeof ContentStorage !== 'undefined' && ContentStorage.getContent) {
+                try {
+                    const content = ContentStorage.getContent();
 
-                // Update header phone
-                const headerPhone = document.querySelector('.phone-number');
-                if (headerPhone && content.header.phone) {
-                    headerPhone.textContent = content.header.phone;
-                    headerPhone.parentElement.href = 'tel:' + content.header.phone.replace(/\s/g, '');
-                }
+                    const updatePhone = function (selector, phone) {
+                        if (selector) {
+                            selector.textContent = phone;
+                            selector.parentElement.href = 'tel:' + phone.replace(/\s/g, '');
+                        }
+                    };
 
-                // Update footer
-                if (content.footer) {
+                    const headerPhone = document.querySelector('.phone-number');
+                    if (headerPhone && content.header?.phone) {
+                        updatePhone(headerPhone, content.header.phone);
+                    }
+
                     const footerPhone = document.querySelector('.footer-contacts a[href^="tel"]');
-                    if (footerPhone) {
-                        footerPhone.textContent = content.footer.phone;
-                        footerPhone.href = 'tel:' + content.footer.phone.replace(/\s/g, '');
+                    if (footerPhone && content.footer?.phone) {
+                        updatePhone(footerPhone, content.footer.phone);
                     }
 
                     const footerEmail = document.querySelector('.footer-contacts a[href^="mailto"]');
-                    if (footerEmail) {
+                    if (footerEmail && content.footer?.email) {
                         footerEmail.textContent = content.footer.email;
                         footerEmail.href = 'mailto:' + content.footer.email;
                     }
+                } catch (e) {
+                    // Ignore errors from ContentStorage processing
                 }
+            }
 
-                // Update hero banner image
-                function resolveBannerPath(path) {
-                    if (!path) return 'img/lift.png';
-                    if (path.startsWith('data:') || path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/')) {
-                        return path;
-                    }
-                    return path.replace(/^\.\//, '');
+            // Ensure hero banner loads correctly on all hosts
+            const heroBannerImage = document.getElementById('hero-banner-image');
+            const heroBannerWrap = document.getElementById('hero-banner-wrap');
+            if (heroBannerImage) {
+                // Use the original image path; ensure fallback is set
+                if (!heroBannerImage.src || heroBannerImage.src.endsWith('img/lift.png')) {
+                    heroBannerImage.src = 'lift.png';
                 }
-
-                const heroBannerWrap = document.getElementById('hero-banner-wrap');
-                const heroBannerImage = document.getElementById('hero-banner-image');
-                if (heroBannerWrap && heroBannerImage) {
-                    heroBannerImage.onerror = function () {
-                        if (this.src.includes('/img/lift.png') || this.src.endsWith('img/lift.png')) {
-                            return;
-                        }
-                        this.src = 'img/lift.png';
-                    };
+                // Show wrapper
+                if (heroBannerWrap) {
+                    heroBannerWrap.style.display = 'block';
                 }
-
-                if (content.hero && content.hero.heroImage) {
-                    if (heroBannerWrap && heroBannerImage) {
-                        heroBannerImage.src = resolveBannerPath(content.hero.heroImage);
-                        heroBannerWrap.style.display = 'block';
+                // Optional error handler to guarantee fallback
+                heroBannerImage.onerror = function () {
+                    // If the image fails to load, ensure fallback is applied
+                    if (!this.src.endsWith('lift.png')) {
+                        this.src = 'lift.png';
                     }
-                } else {
-                    if (heroBannerWrap && heroBannerImage) {
-                        heroBannerImage.src = 'img/lift.png';
-                        heroBannerWrap.style.display = 'block';
-                    }
-                }
+                };
             }
         });
     </script>
