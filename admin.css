@@ -452,6 +452,10 @@ body {
     cursor: pointer;
     line-height: 1;
     transition: color 0.2s ease;
+    z-index: 1001;
+    position: relative;
+    pointer-events: auto;
+    padding: 0 4px;
 }
 
 .modal-close:hover {

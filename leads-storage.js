@@ -32,11 +32,13 @@ const LeadStorage = {
                 city: leadData.city || '',
                 format: leadData.format || '',
                 comment: leadData.comment || '',
+                donetsk_programs: leadData.donetsk_programs || 0,
+                makeevka_programs: leadData.makeevka_programs || 0,
                 status: 'new',
                 source: leadData.source || 'form'
             };
 
-            leads.unshift(newLead); // Add to beginning
+            leads.unshift(newLead);
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(leads));
             return newLead;
         } catch (error) {
@@ -136,7 +138,7 @@ const LeadStorage = {
         }
 
         // CSV headers
-        const headers = ['ID', 'Дата', 'Имя', 'Телефон', 'Город', 'Формат', 'Статус', 'Комментарий'];
+        const headers = ['ID', 'Дата', 'Имя', 'Телефон', 'Город', 'Донецк пр.', 'Макеевка пр.', 'Формат', 'Статус', 'Комментарий'];
 
         // Convert leads to CSV rows
         const rows = leads.map(lead => {
@@ -147,6 +149,8 @@ const LeadStorage = {
             const format = lead.format ? lead.format.toUpperCase() + 'min' : 'Консультация';
             const status = lead.status === 'new' ? 'Новая' :
                 lead.status === 'contacted' ? 'Обработана' : 'Закрыта';
+            const dp = lead.donetsk_programs || 0;
+            const mp = lead.makeevka_programs || 0;
 
             return [
                 lead.id,
@@ -154,6 +158,8 @@ const LeadStorage = {
                 `"${lead.name}"`,
                 lead.phone,
                 city,
+                dp,
+                mp,
                 format,
                 status,
                 `"${lead.comment.replace(/"/g, '""')}"`

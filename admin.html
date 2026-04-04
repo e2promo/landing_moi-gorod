@@ -23,7 +23,7 @@
                 <h1>📊 Панель управления заявками</h1>
                 <div class="header-actions">
                     <span class="user-info">Администратор</span>
-                    <button id="logout-btn" class="btn-secondary">Выйти</button>
+                    <button type="button" id="logout-btn" class="btn-secondary">Выйти</button>
                 </div>
             </div>
         </header>
@@ -104,6 +104,7 @@
                                 <th>Имя</th>
                                 <th>Телефон</th>
                                 <th>Город</th>
+                                <th>Адресн. пр.</th>
                                 <th>Формат</th>
                                 <th>Статус</th>
                                 <th>Действия</th>
@@ -111,7 +112,7 @@
                         </thead>
                         <tbody id="leads-table-body">
                             <tr class="no-data">
-                                <td colspan="7">Заявок пока нет</td>
+                                <td colspan="8">Заявок пока нет</td>
                             </tr>
                         </tbody>
                     </table>
@@ -134,7 +135,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Детали заявки</h2>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
+                <button type="button" class="modal-close" id="modal-close-btn" onclick="hideLeadModal()">&times;</button>
             </div>
             <div class="modal-body" id="modal-body">
                 <!-- Lead details will be inserted here -->

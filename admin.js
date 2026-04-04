@@ -23,7 +23,7 @@ function login() {
 
 function logout() {
     sessionStorage.removeItem(SESSION_KEY);
-    showDashboard();
+    window.location.href = 'index.html';
 }
 
 function showLoginScreen() {
@@ -144,7 +144,7 @@ function renderLeadsTable() {
     tbody.innerHTML = '';
 
     if (leads.length === 0) {
-        tbody.innerHTML = '<tr class="no-data"><td colspan="7">Заявок не найдено</td></tr>';
+        tbody.innerHTML = '<tr class="no-data"><td colspan="8">Заявок не найдено</td></tr>';
         return;
     }
 
@@ -192,6 +192,7 @@ function createLeadRow(lead) {
         <td><strong>${lead.name}</strong></td>
         <td>${lead.phone}</td>
         <td>${cityName}</td>
+        <td>${_formatPrograms(lead)}</td>
         <td>${formatName}</td>
         <td>
             <select class="status-select" data-lead-id="${lead.id}">
@@ -303,6 +304,10 @@ function showLeadModal(leadId) {
             <div class="detail-value">${cityName}</div>
         </div>
         <div class="detail-row">
+            <div class="detail-label">Адресные программы</div>
+            <div class="detail-value">${_formatPrograms(lead)}</div>
+        </div>
+        <div class="detail-row">
             <div class="detail-label">Формат</div>
             <div class="detail-value">${formatName}</div>
         </div>
@@ -322,12 +327,28 @@ function showLeadModal(leadId) {
 }
 
 function hideLeadModal() {
-    document.getElementById('lead-modal').style.display = 'none';
+    const modal = document.getElementById('lead-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
+// Make globally accessible
+window.hideLeadModal = hideLeadModal;
+
 function showNotification(message, type = 'success') {
-    // Simple alert for now - can be enhanced with custom notification
     console.log(`[${type}] ${message}`);
+}
+
+// Helper: format address programs for display
+function _formatPrograms(lead) {
+    const dp = parseInt(lead.donetsk_programs) || 0;
+    const mp = parseInt(lead.makeevka_programs) || 0;
+    if (dp === 0 && mp === 0) return '—';
+    let parts = [];
+    if (dp > 0) parts.push(`Дн: ${dp}`);
+    if (mp > 0) parts.push(`Мк: ${mp}`);
+    return parts.join(', ') + ` (${(dp + mp) * 100} лифт.)`;
 }
 
 // Export to CSV
@@ -345,17 +366,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Authentication disabled: open dashboard directly
     showDashboard();
 
-    // Login form
+    // Login form (may not exist if login is disabled)
     const loginForm = document.getElementById('login-form');
-    loginForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        login();
-        showDashboard();
-    });
+    if (loginForm) {
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            login();
+            showDashboard();
+        });
+    }
 
     // Logout button
     const logoutBtn = document.getElementById('logout-btn');
-    logoutBtn.addEventListener('click', logout);
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            logout();
+        });
+    }
 
     // Search input
     const searchInput = document.getElementById('search-input');
@@ -384,13 +412,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Modal close button
     const modalCloseBtn = document.getElementById('modal-close-btn');
-    modalCloseBtn.addEventListener('click', hideLeadModal);
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', hideLeadModal);
+    }
 
     // Close modal on background click
     const modal = document.getElementById('lead-modal');
-    modal.addEventListener('click', function (e) {
-        if (e.target === modal) {
-            hideLeadModal();
-        }
-    });
+    if (modal) {
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                hideLeadModal();
+            }
+        });
+    }
 });

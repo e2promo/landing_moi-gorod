@@ -579,16 +579,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="city">Город размещения *</label>
-                            <select id="city" name="city" required>
-                                <option value="">Выберите город</option>
-                                <option value="donetsk">Донецк</option>
-                                <option value="makeevka">Макеевка</option>
-                                <option value="both">Оба города</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="format">Формат размещения</label>
                             <select id="format" name="format">
                                 <option value="">Нужна консультация</option>
@@ -596,6 +586,30 @@
                                 <option value="a4">A4min (198×224 мм)</option>
                                 <option value="a3">A3min (396×224 мм)</option>
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Адресные программы по городам</label>
+                            <p class="form-hint">Одна адресная программа — это 100 лифтов с равномерным покрытием города</p>
+                            <div class="district-programs">
+                                <div class="district-row">
+                                    <label for="donetsk-programs">Донецк</label>
+                                    <div class="program-counter">
+                                        <button type="button" class="counter-btn" data-target="donetsk-programs" data-action="minus">−</button>
+                                        <input type="number" id="donetsk-programs" name="donetsk-programs" min="0" max="10" value="0" class="counter-input">
+                                        <button type="button" class="counter-btn" data-target="donetsk-programs" data-action="plus">+</button>
+                                    </div>
+                                </div>
+                                <div class="district-row">
+                                    <label for="makeevka-programs">Макеевка</label>
+                                    <div class="program-counter">
+                                        <button type="button" class="counter-btn" data-target="makeevka-programs" data-action="minus">−</button>
+                                        <input type="number" id="makeevka-programs" name="makeevka-programs" min="0" max="10" value="0" class="counter-input">
+                                        <button type="button" class="counter-btn" data-target="makeevka-programs" data-action="plus">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="programs-total" id="programsTotal"></div>
                         </div>
 
                         <div class="form-group">

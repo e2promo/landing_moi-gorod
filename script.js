@@ -283,19 +283,8 @@ function fillFormFromCalculator() {
     const formatName = formatSelect.options[formatSelect.selectedIndex].text.split(' ')[0];
 
     // Fill form fields
-    const formCitySelect = document.getElementById('city');
     const formFormatSelect = document.getElementById('format');
     const formComment = document.getElementById('comment');
-
-    // Set city
-    if (formCitySelect) {
-        formCitySelect.value = selectedCity;
-        // Add visual feedback
-        formCitySelect.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            formCitySelect.style.animation = '';
-        }, 500);
-    }
 
     // Set format
     if (formFormatSelect) {
@@ -531,6 +520,58 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // District program counters
+    const counterBtns = document.querySelectorAll('.counter-btn');
+    counterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+            const action = this.getAttribute('data-action');
+            const input = document.getElementById(targetId);
+            if (!input) return;
+
+            let val = parseInt(input.value) || 0;
+            if (action === 'plus') {
+                val = Math.min(val + 1, 10);
+            } else {
+                val = Math.max(val - 1, 0);
+            }
+            input.value = val;
+            updateProgramsTotal();
+        });
+    });
+
+    const programInputs = document.querySelectorAll('.counter-input');
+    programInputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+            let val = parseInt(this.value) || 0;
+            val = Math.max(0, Math.min(10, val));
+            this.value = val;
+            updateProgramsTotal();
+        });
+    });
+
+    function updateProgramsTotal() {
+        const donetskCount = parseInt(document.getElementById('donetsk-programs')?.value) || 0;
+        const makeevkaCount = parseInt(document.getElementById('makeevka-programs')?.value) || 0;
+        const total = donetskCount + makeevkaCount;
+        const totalLifts = donetskCount * 100 + makeevkaCount * 100;
+        const totalEl = document.getElementById('programsTotal');
+
+        if (totalEl) {
+            if (total > 0) {
+                let parts = [];
+                if (donetskCount > 0) parts.push(`Донецк: ${donetskCount} пр. (${donetskCount * 100} лифтов)`);
+                if (makeevkaCount > 0) parts.push(`Макеевка: ${makeevkaCount} пр. (${makeevkaCount * 100} лифтов)`);
+                totalEl.textContent = `Итого: ${total} адресн. пр. = ${totalLifts} лифтов`;
+                totalEl.style.display = 'block';
+            } else {
+                totalEl.style.display = 'none';
+            }
+        }
+    }
+
+    updateProgramsTotal();
+
     // Form submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -538,11 +579,19 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             // Get form data
+            const donetskPrograms = parseInt(document.getElementById('donetsk-programs')?.value) || 0;
+            const makeevkaPrograms = parseInt(document.getElementById('makeevka-programs')?.value) || 0;
+            let cityParts = [];
+            if (donetskPrograms > 0) cityParts.push('Донецк');
+            if (makeevkaPrograms > 0) cityParts.push('Макеевка');
+
             const formData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
-                city: document.getElementById('city').value,
+                city: cityParts.join(', ') || 'Не выбрано',
                 format: document.getElementById('format').value,
+                donetsk_programs: donetskPrograms,
+                makeevka_programs: makeevkaPrograms,
                 comment: document.getElementById('comment').value,
                 source: 'form'
             };
