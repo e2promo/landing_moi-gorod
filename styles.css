@@ -590,51 +590,6 @@ section {
     border-radius: 30px;
 }
 
-.map-legend {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.87);
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-    border: 1px solid rgba(227, 235, 243, 0.75);
-    backdrop-filter: blur(12px);
-}
-
-.map-legend h4 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    color: var(--text-dark);
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: var(--text-medium);
-}
-
-.legend-marker {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.legend-marker.available {
-    background: var(--primary-color);
-}
-
-.legend-marker.selected {
-    background: var(--accent-color);
-}
-
 .calculator-panel {
     display: flex;
     flex-direction: column;
