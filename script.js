@@ -5,6 +5,7 @@ let selectedAddresses = [];
 let currentCity = 'donetsk';
 let currentMode = 'program'; // 'program' or 'custom'
 let isMapAvailable = false;
+let selectedMonths = 3;
 
 function getDefaultMarkerColor(location) {
     return location && location.manualReview ? '#f59e0b' : '#2563eb';
@@ -246,6 +247,25 @@ function updateCalculation() {
     document.getElementById('selected-format').textContent = formatName;
     document.getElementById('selected-city').textContent = city === 'donetsk' ? 'Донецк' : 'Макеевка';
     totalPriceEl.textContent = totalPrice.toLocaleString('ru-RU') + ' ₽';
+
+    const pricePerMonth = totalPrice;
+    totalPrice = totalPrice * selectedMonths;
+    totalPriceEl.textContent = totalPrice.toLocaleString('ru-RU') + ' ₽';
+
+    const periodEl = document.getElementById('pricePeriod');
+    const monthWord = getMonthWord(selectedMonths);
+    if (periodEl) {
+        periodEl.textContent = `за ${selectedMonths} ${monthWord}`;
+    }
+}
+
+function getMonthWord(n) {
+    const abs = Math.abs(n) % 100;
+    const lastDigit = abs % 10;
+    if (abs > 10 && abs < 20) return 'месяцев';
+    if (lastDigit === 1) return 'месяц';
+    if (lastDigit >= 2 && lastDigit <= 4) return 'месяца';
+    return 'месяцев';
 }
 
 // Fill order form with calculator data
@@ -293,7 +313,8 @@ function fillFormFromCalculator() {
         comment += `Город: ${selectedCity === 'donetsk' ? 'Донецк' : 'Макеевка'}\n`;
         comment += `Формат: ${formatName}\n`;
         comment += `Количество лифтов: ${totalLifts}\n`;
-        comment += `Стоимость: ${totalPrice} за 1 месяц\n`;
+        const monthWord = getMonthWord(selectedMonths);
+        comment += `Стоимость: ${totalPrice} за ${selectedMonths} ${monthWord}\n`;
 
         if (currentMode === 'program') {
             comment += `\nТип размещения: Адресная программа (полное покрытие города)`;
@@ -414,6 +435,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Format selector change
     const formatSelect = document.getElementById('calc-format');
     formatSelect.addEventListener('change', function () {
+        updateCalculation();
+    });
+
+    // Month selector change
+    const monthsSelect = document.getElementById('calc-months');
+    monthsSelect.addEventListener('change', function () {
+        selectedMonths = parseInt(this.value);
         updateCalculation();
     });
 

@@ -244,6 +244,17 @@
                         </div>
 
                         <div class="control-group">
+                            <label for="calc-months">Срок размещения</label>
+                            <select id="calc-months" class="calc-select">
+                                <option value="1">1 месяц</option>
+                                <option value="2">2 месяца</option>
+                                <option value="3" selected>3 месяца</option>
+                                <option value="6">6 месяцев</option>
+                                <option value="12">12 месяцев</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
                             <label>Выбор адресов</label>
                             <div class="address-selection-mode">
                                 <button class="mode-btn active" data-mode="program">
@@ -302,7 +313,7 @@
                     <div class="result-price">
                         <div class="price-label">Стоимость размещения:</div>
                         <div class="price-value" id="total-price">24 000 ₽</div>
-                        <div class="price-period">за 1 месяц</div>
+                        <div class="price-period" id="pricePeriod">за 3 месяца</div>
                     </div>
 
                     <div class="result-includes">
