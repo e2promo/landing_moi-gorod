@@ -235,21 +235,18 @@
                         <div class="control-group">
                             <label for="calc-format">Формат рекламы</label>
                             <select id="calc-format" class="calc-select">
-                                <option value="a5" data-price-donetsk="14000" data-price-makeevka="11370">A5min (198×112
-                                    мм) — от 11 370 ₽</option>
-                                <option value="a4" data-price-donetsk="24000" data-price-makeevka="20250" selected>A4min
-                                    (198×224 мм) — от 20 250 ₽</option>
-                                <option value="a3" data-price-donetsk="45000" data-price-makeevka="36450">A3min (396×224
-                                    мм) — от 36 450 ₽</option>
+                                <option value="a5" data-price-donetsk="14000" data-price-makeevka="11370" data-donetsk-text="A5min (198×112 мм) — 14 000 ₽" data-makeevka-text="A5min (198×112 мм) — 11 370 ₽">A5min (198×112 мм) — 14 000 ₽</option>
+                                <option value="a4" data-price-donetsk="24000" data-price-makeevka="20250" selected data-donetsk-text="A4min (198×224 мм) — 24 000 ₽" data-makeevka-text="A4min (198×224 мм) — 20 250 ₽">A4min (198×224 мм) — 24 000 ₽</option>
+                                <option value="a3" data-price-donetsk="45000" data-price-makeevka="36450" data-donetsk-text="A3min (396×224 мм) — 45 000 ₽" data-makeevka-text="A3min (396×224 мм) — 36 450 ₽">A3min (396×224 мм) — 45 000 ₽</option>
                             </select>
                         </div>
 
                         <div class="control-group">
                             <label for="calc-months">Срок размещения</label>
                             <select id="calc-months" class="calc-select">
-                                <option value="1">1 месяц</option>
+                                <option value="1" selected>1 месяц</option>
                                 <option value="2">2 месяца</option>
-                                <option value="3" selected>3 месяца</option>
+                                <option value="3">3 месяца</option>
                                 <option value="6">6 месяцев</option>
                                 <option value="12">12 месяцев</option>
                             </select>
@@ -314,7 +311,7 @@
                     <div class="result-price">
                         <div class="price-label">Стоимость размещения:</div>
                         <div class="price-value" id="total-price">24 000 ₽</div>
-                        <div class="price-period" id="pricePeriod">за 3 месяца</div>
+                        <div class="price-period" id="pricePeriod">за 1 месяц</div>
                     </div>
 
                     <div class="result-includes">

@@ -5,7 +5,7 @@ let selectedAddresses = [];
 let currentCity = 'donetsk';
 let currentMode = 'program'; // 'program' or 'custom'
 let isMapAvailable = false;
-let selectedMonths = 3;
+let selectedMonths = 1;
 
 function getDefaultMarkerColor(location) {
     return location && location.manualReview ? '#f59e0b' : '#2563eb';
@@ -200,6 +200,23 @@ function updateSelectedAddressesList() {
     });
 }
 
+// Update format option texts based on selected city
+function updateFormatTexts() {
+    const citySelect = document.getElementById('calc-city');
+    const formatSelect = document.getElementById('calc-format');
+    if (!citySelect || !formatSelect) return;
+
+    const city = citySelect.value;
+    const textAttr = 'data-' + city + '-text';
+
+    Array.from(formatSelect.options).forEach(function (option) {
+        const newText = option.getAttribute(textAttr);
+        if (newText) {
+            option.textContent = newText;
+        }
+    });
+}
+
 // Calculate total price and update UI
 function updateCalculation() {
     const citySelect = document.getElementById('calc-city');
@@ -208,6 +225,8 @@ function updateCalculation() {
 
     const city = citySelect.value;
     const formatName = formatSelect.options[formatSelect.selectedIndex].text.split(' ')[0];
+
+    updateFormatTexts();
 
     // Get price based on city
     const priceAttr = 'data-price-' + city;
@@ -418,6 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const programCount = addressPrograms[currentCity].count;
         document.getElementById('program-count').textContent = programCount;
 
+        updateFormatTexts();
         updateCalculation();
     });
 
