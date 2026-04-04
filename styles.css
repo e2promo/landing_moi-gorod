@@ -569,8 +569,8 @@ section {
 }
 
 .calculator-wrapper {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 34px;
     margin-top: 34px;
 }
@@ -1352,10 +1352,6 @@ section {
 
     .price-card.popular {
         transform: scale(1);
-    }
-
-    .calculator-wrapper {
-        grid-template-columns: 1fr;
     }
 
     .yandex-map {

@@ -219,10 +219,6 @@
             <p class="section-subtitle">Выберите адреса на карте и рассчитайте стоимость вашей рекламной кампании</p>
 
             <div class="calculator-wrapper">
-                <!-- Map Container -->
-                <div class="map-container">
-                    <div id="map" class="yandex-map"></div>
-                </div>
                 <!-- Calculator Panel -->
                 <div class="calculator-panel">
                     <div class="calculator-controls">
@@ -280,41 +276,48 @@
                         </div>
                     </div>
 
-                    <div class="calculator-result">
-                        <div class="result-summary">
-                            <div class="summary-item">
-                                <span class="summary-label">Количество лифтов:</span>
-                                <span class="summary-value" id="total-lifts">100</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Формат:</span>
-                                <span class="summary-value" id="selected-format">A4min</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Город:</span>
-                                <span class="summary-value" id="selected-city">Донецк</span>
-                            </div>
-                        </div>
+                </div>
 
-                        <div class="result-price">
-                            <div class="price-label">Стоимость размещения:</div>
-                            <div class="price-value" id="total-price">24 000 ₽</div>
-                            <div class="price-period">за 1 месяц</div>
-                        </div>
+                <!-- Map Container -->
+                <div class="map-container">
+                    <div id="map" class="yandex-map"></div>
+                </div>
 
-                        <div class="result-includes">
-                            <p><strong>В стоимость входит:</strong></p>
-                            <ul>
-                                <li>Печать макетов</li>
-                                <li>Монтаж и демонтаж</li>
-                                <li>Фотоотчет</li>
-                                <li>Страховка от вандализма</li>
-                            </ul>
+                <!-- Calculator Result -->
+                <div class="calculator-result">
+                    <div class="result-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Количество лифтов:</span>
+                            <span class="summary-value" id="total-lifts">100</span>
                         </div>
-
-                        <a href="#form" class="cta-button cta-primary full-width" id="calculator-order-btn">Заказать
-                            размещение</a>
+                        <div class="summary-item">
+                            <span class="summary-label">Формат:</span>
+                            <span class="summary-value" id="selected-format">A4min</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Город:</span>
+                            <span class="summary-value" id="selected-city">Донецк</span>
+                        </div>
                     </div>
+
+                    <div class="result-price">
+                        <div class="price-label">Стоимость размещения:</div>
+                        <div class="price-value" id="total-price">24 000 ₽</div>
+                        <div class="price-period">за 1 месяц</div>
+                    </div>
+
+                    <div class="result-includes">
+                        <p><strong>В стоимость входит:</strong></p>
+                        <ul>
+                            <li>Печать макетов</li>
+                            <li>Монтаж и демонтаж</li>
+                            <li>Фотоотчет</li>
+                            <li>Страховка от вандализма</li>
+                        </ul>
+                    </div>
+
+                    <a href="#form" class="cta-button cta-primary full-width" id="calculator-order-btn">Заказать
+                        размещение</a>
                 </div>
             </div>
         </div>

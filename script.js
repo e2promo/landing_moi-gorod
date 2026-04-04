@@ -605,4 +605,29 @@ document.addEventListener('DOMContentLoaded', function () {
         el.style.transitionDelay = `${(index % 6) * 80}ms`;
         observer.observe(el);
     });
+
+    // Header hide on scroll (mobile only)
+    let lastScrollY = window.scrollY;
+    const header = document.querySelector('.site-header');
+
+    if (header && window.innerWidth <= 968) {
+        window.addEventListener('scroll', function () {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 200) {
+                if (currentScrollY > lastScrollY) {
+                    header.style.transform = 'translateY(-100%)';
+                    header.style.opacity = '0';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                    header.style.opacity = '1';
+                }
+            } else {
+                header.style.transform = 'translateY(0)';
+                header.style.opacity = '1';
+            }
+
+            lastScrollY = currentScrollY;
+        }, { passive: true });
+    }
 });
