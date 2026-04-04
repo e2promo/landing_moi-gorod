@@ -51,7 +51,6 @@
 .logo a {
     display: flex;
     align-items: center;
-    gap: 8px;
     text-decoration: none;
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -60,20 +59,10 @@
     transform: scale(1.05);
 }
 
-.logo-icon {
-    font-size: 2rem;
-}
-
-.logo-text {
-    font-size: 1.45rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-family: 'Unbounded', 'Manrope', sans-serif;
-    background: linear-gradient(135deg, #0b3d5f 0%, #ea580c 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.logo-image {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
 }
 
 .main-nav {
@@ -262,12 +251,8 @@
 }
 
 @media (max-width: 640px) {
-    .logo-text {
-        font-size: 1.2rem;
-    }
-
-    .logo-icon {
-        font-size: 1.5rem;
+    .logo-image {
+        height: 32px;
     }
 }
 
