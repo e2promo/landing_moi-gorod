@@ -303,17 +303,53 @@ function fillFormFromCalculator() {
 
     // Fill form fields
     const formFormatSelect = document.getElementById('format');
+    const formMonthsSelect = document.getElementById('form-months');
     const formComment = document.getElementById('comment');
 
     // Set format
     if (formFormatSelect) {
         formFormatSelect.value = selectedFormat;
-        // Add visual feedback
         formFormatSelect.style.animation = 'pulse 0.5s ease';
         setTimeout(() => {
             formFormatSelect.style.animation = '';
         }, 500);
     }
+
+    // Set months
+    if (formMonthsSelect) {
+        formMonthsSelect.value = String(selectedMonths);
+        formMonthsSelect.style.animation = 'pulse 0.5s ease';
+        setTimeout(() => {
+            formMonthsSelect.style.animation = '';
+        }, 500);
+    }
+
+    // Set address programs based on mode
+    if (currentMode === 'program') {
+        if (selectedCity === 'donetsk') {
+            const donetskInput = document.getElementById('donetsk-programs');
+            if (donetskInput) donetskInput.value = 1;
+        } else {
+            const makeevkaInput = document.getElementById('makeevka-programs');
+            if (makeevkaInput) makeevkaInput.value = 1;
+        }
+    } else if (currentMode === 'custom') {
+        const donetskInput = document.getElementById('donetsk-programs');
+        const makeevkaInput = document.getElementById('makeevka-programs');
+        if (donetskInput) donetskInput.value = 0;
+        if (makeevkaInput) makeevkaInput.value = 0;
+    }
+
+    // Update programs total display
+    setTimeout(() => {
+        const donetskInput = document.getElementById('donetsk-programs');
+        const makeevkaInput = document.getElementById('makeevka-programs');
+        if (donetskInput && makeevkaInput) {
+            const event = new Event('change');
+            donetskInput.dispatchEvent(event);
+            makeevkaInput.dispatchEvent(event);
+        }
+    }, 600);
 
     // Create detailed comment
     if (formComment) {
@@ -610,6 +646,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 phone: document.getElementById('phone').value,
                 city: cityParts.join(', ') || 'Не выбрано',
                 format: document.getElementById('format').value,
+                months: parseInt(document.getElementById('form-months')?.value) || 1,
                 donetsk_programs: donetskPrograms,
                 makeevka_programs: makeevkaPrograms,
                 comment: document.getElementById('comment').value,
