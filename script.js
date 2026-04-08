@@ -44,33 +44,41 @@ function handleMapUnavailable(reason) {
 
 // Initialize Yandex Map
 function initMap() {
-    if (typeof ymaps === 'undefined' || !ymaps?.ready) {
-        handleMapUnavailable('скрипт Яндекс.Карт не загрузился');
-        return;
+    let attempts = 0;
+    const maxAttempts = 40; // ~10s with 250ms interval
+
+    function tryInit() {
+        if (typeof ymaps === 'undefined' || !ymaps || !ymaps.ready) {
+            attempts += 1;
+            if (attempts < maxAttempts) {
+                setTimeout(tryInit, 250);
+            } else {
+                handleMapUnavailable('скрипт Яндекс.Карт не загрузился');
+            }
+            return;
+        }
+
+        ymaps.ready(function () {
+            try {
+                map = new ymaps.Map('map', {
+                    center: [48.0159, 37.8029],
+                    zoom: 12,
+                    controls: ['zoomControl', 'fullscreenControl']
+                });
+
+                placemarksCollection = new ymaps.GeoObjectCollection();
+                map.geoObjects.add(placemarksCollection);
+
+                isMapAvailable = true;
+                loadMarkers(currentCity);
+            } catch (e) {
+                console.error('Map init error:', e);
+                handleMapUnavailable(e && e.message ? e.message : e);
+            }
+        });
     }
 
-    ymaps.ready(function () {
-        try {
-            // Create map centered on Donetsk
-            map = new ymaps.Map('map', {
-                center: [48.0159, 37.8029],
-                zoom: 12,
-                controls: ['zoomControl', 'fullscreenControl']
-            });
-
-            // Create collection for placemarks
-            placemarksCollection = new ymaps.GeoObjectCollection();
-            map.geoObjects.add(placemarksCollection);
-
-            isMapAvailable = true;
-
-            // Load initial markers
-            loadMarkers(currentCity);
-        } catch (e) {
-            console.error('Map init error:', e);
-            handleMapUnavailable(e?.message || e);
-        }
-    });
+    tryInit();
 }
 
 // Load markers for selected city
@@ -287,108 +295,116 @@ function getMonthWord(n) {
     return 'месяцев';
 }
 
-// Fill order form with calculator data
-function fillFormFromCalculator() {
-    const citySelect = document.getElementById('calc-city');
-    const formatSelect = document.getElementById('calc-format');
-    const totalLiftsEl = document.getElementById('total-lifts');
-    const totalPriceEl = document.getElementById('total-price');
+    // Fill order form with calculator data
+    function fillFormFromCalculator() {
+        const citySelect = document.getElementById('calc-city');
+        const formatSelect = document.getElementById('calc-format');
+        const totalLiftsEl = document.getElementById('total-lifts');
+        const totalPriceEl = document.getElementById('total-price');
 
-    // Get current calculator values
-    const selectedCity = citySelect.value;
-    const selectedFormat = formatSelect.value;
-    const totalLifts = totalLiftsEl.textContent;
-    const totalPrice = totalPriceEl.textContent;
-    const formatName = formatSelect.options[formatSelect.selectedIndex].text.split(' ')[0];
+        // Get current calculator values
+        const selectedCity = citySelect.value;
+        const selectedFormat = formatSelect.value;
+        const totalLifts = totalLiftsEl.textContent;
+        const totalPriceText = totalPriceEl.textContent; // "24 000 ₽"
+        const totalPriceValue = parseInt(totalPriceText.replace(/\s/g, '').replace('₽', ''));
+        const formatName = formatSelect.options[formatSelect.selectedIndex].text.split(' ')[0];
 
-    // Fill form fields
-    const formFormatSelect = document.getElementById('format');
-    const formMonthsSelect = document.getElementById('form-months');
-    const formComment = document.getElementById('comment');
+        // Fill form fields
+        const formFormatSelect = document.getElementById('format');
+        const formMonthsSelect = document.getElementById('form-months');
+        const formComment = document.getElementById('comment');
+        const formTotalPrice = document.getElementById('form-total-price');
 
-    // Set format
-    if (formFormatSelect) {
-        formFormatSelect.value = selectedFormat;
-        formFormatSelect.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            formFormatSelect.style.animation = '';
-        }, 500);
-    }
-
-    // Set months
-    if (formMonthsSelect) {
-        formMonthsSelect.value = String(selectedMonths);
-        formMonthsSelect.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            formMonthsSelect.style.animation = '';
-        }, 500);
-    }
-
-    // Set address programs based on mode
-    if (currentMode === 'program') {
-        if (selectedCity === 'donetsk') {
-            const donetskInput = document.getElementById('donetsk-programs');
-            if (donetskInput) donetskInput.value = 1;
-        } else {
-            const makeevkaInput = document.getElementById('makeevka-programs');
-            if (makeevkaInput) makeevkaInput.value = 1;
+        // Set format
+        if (formFormatSelect) {
+            formFormatSelect.value = selectedFormat;
+            formFormatSelect.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                formFormatSelect.style.animation = '';
+            }, 500);
         }
-    } else if (currentMode === 'custom') {
-        const donetskInput = document.getElementById('donetsk-programs');
-        const makeevkaInput = document.getElementById('makeevka-programs');
-        if (donetskInput) donetskInput.value = 0;
-        if (makeevkaInput) makeevkaInput.value = 0;
-    }
 
-    // Update programs total display
-    setTimeout(() => {
-        const donetskInput = document.getElementById('donetsk-programs');
-        const makeevkaInput = document.getElementById('makeevka-programs');
-        if (donetskInput && makeevkaInput) {
-            const event = new Event('change');
-            donetskInput.dispatchEvent(event);
-            makeevkaInput.dispatchEvent(event);
+        // Set months
+        if (formMonthsSelect) {
+            formMonthsSelect.value = String(selectedMonths);
+            formMonthsSelect.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                formMonthsSelect.style.animation = '';
+            }, 500);
         }
-    }, 600);
 
-    // Create detailed comment
-    if (formComment) {
-        let comment = `Расчет из калькулятора:\n`;
-        comment += `Город: ${selectedCity === 'donetsk' ? 'Донецк' : 'Макеевка'}\n`;
-        comment += `Формат: ${formatName}\n`;
-        comment += `Количество лифтов: ${totalLifts}\n`;
-        const monthWord = getMonthWord(selectedMonths);
-        comment += `Стоимость: ${totalPrice} за ${selectedMonths} ${monthWord}\n`;
+        // Set total price from calculator
+        if (formTotalPrice) {
+            formTotalPrice.value = totalPriceValue;
+        }
 
+        // Set address programs based on mode
         if (currentMode === 'program') {
-            comment += `\nТип размещения: Адресная программа (полное покрытие города)`;
-        } else if (currentMode === 'custom' && selectedAddresses.length > 0) {
-            comment += `\nТип размещения: Выборочное размещение\n`;
-            comment += `Выбранные адреса:\n`;
-            selectedAddresses.forEach((addr, index) => {
-                comment += `${index + 1}. ${addr.address} (${addr.lifts} лифт.)\n`;
-            });
+            const donetskInput = document.getElementById('donetsk-programs');
+            const makeevkaInput = document.getElementById('makeevka-programs');
+            if (selectedCity === 'donetsk') {
+                if (donetskInput) donetskInput.value = 1;
+                if (makeevkaInput) makeevkaInput.value = 0;
+            } else {
+                if (makeevkaInput) makeevkaInput.value = 1;
+                if (donetskInput) donetskInput.value = 0;
+            }
+        } else if (currentMode === 'custom') {
+            const donetskInput = document.getElementById('donetsk-programs');
+            const makeevkaInput = document.getElementById('makeevka-programs');
+            if (donetskInput) donetskInput.value = 0;
+            if (makeevkaInput) makeevkaInput.value = 0;
         }
 
-        formComment.value = comment;
-        // Add visual feedback
-        formComment.style.animation = 'pulse 0.5s ease';
+        // Update programs total display
         setTimeout(() => {
-            formComment.style.animation = '';
-        }, 500);
-    }
+            const donetskInput = document.getElementById('donetsk-programs');
+            const makeevkaInput = document.getElementById('makeevka-programs');
+            if (donetskInput && makeevkaInput) {
+                const event = new Event('change');
+                donetskInput.dispatchEvent(event);
+                makeevkaInput.dispatchEvent(event);
+            }
+        }, 600);
 
-    // Scroll form into better view and highlight it
-    const formContainer = document.querySelector('.form-container');
-    if (formContainer) {
-        formContainer.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.5)';
-        setTimeout(() => {
-            formContainer.style.boxShadow = '';
-        }, 2000);
-    }
+        // Create detailed comment
+        if (formComment) {
+            let comment = `Расчет из калькулятора:\n`;
+            comment += `Город: ${selectedCity === 'donetsk' ? 'Донецк' : 'Макеевка'}\n`;
+            comment += `Формат: ${formatName}\n`;
+            comment += `Количество лифтов: ${totalLifts}\n`;
+            const monthWord = getMonthWord(selectedMonths);
+            comment += `Стоимость: ${totalPriceText} за ${selectedMonths} ${monthWord}\n`;
 
-    // Show success notification
-    showNotification('✓ Данные из калькулятора добавлены в форму', 'success');
+            if (currentMode === 'program') {
+                comment += `\nТип размещения: Адресная программа (полное покрытие города)`;
+            } else if (currentMode === 'custom' && selectedAddresses.length > 0) {
+                comment += `\nТип размещения: Выборочное размещение\n`;
+                comment += `Выбранные адреса:\n`;
+                selectedAddresses.forEach((addr, index) => {
+                    comment += `${index + 1}. ${addr.address} (${addr.lifts} лифт.)\n`;
+                });
+            }
+
+            formComment.value = comment;
+            formComment.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                formComment.style.animation = '';
+            }, 500);
+        }
+
+        // Scroll form into better view and highlight it
+        const formContainer = document.querySelector('.form-container');
+        if (formContainer) {
+            formContainer.style.boxShadow = '0 0 0 3px rgba(245, 158, 11, 0.5)';
+            setTimeout(() => {
+                formContainer.style.boxShadow = '';
+            }, 2000);
+        }
+
+        // Show success notification
+        showNotification('✓ Данные из калькулятора добавлены в форму', 'success');
 }
 
 // Show notification banner
@@ -628,6 +644,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateProgramsTotal();
 
+    // Helper to calculate price for form submission
+    function calculateFormPrice(donetskPrograms, makeevkaPrograms, format, months) {
+        const prices = {
+            donetsk: { a5: 14000, a4: 24000, a3: 45000 },
+            makeevka: { a5: 11370, a4: 20250, a3: 36450 }
+        };
+
+        let totalPrice = 0;
+        if (donetskPrograms > 0) {
+            totalPrice += (prices.donetsk[format] || 0) * donetskPrograms;
+        }
+        if (makeevkaPrograms > 0) {
+            totalPrice += (prices.makeevka[format] || 0) * makeevkaPrograms;
+        }
+        
+        return totalPrice * months;
+    }
+
     // Form submission
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
@@ -641,14 +675,25 @@ document.addEventListener('DOMContentLoaded', function () {
             if (donetskPrograms > 0) cityParts.push('Донецк');
             if (makeevkaPrograms > 0) cityParts.push('Макеевка');
 
+            const months = parseInt(document.getElementById('form-months')?.value) || 1;
+            const format = document.getElementById('format').value;
+            const hiddenTotal = parseInt(document.getElementById('form-total-price')?.value) || 0;
+            const programsTotal = donetskPrograms + makeevkaPrograms;
+            const calculatedTotal = calculateFormPrice(donetskPrograms, makeevkaPrograms, format, months);
+
+            // If programs are selected, trust form calculation.
+            // If programs are not selected (custom selection from calculator), use hidden calculator total.
+            const finalTotalPrice = programsTotal > 0 ? calculatedTotal : hiddenTotal;
+
             const formData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
                 city: cityParts.join(', ') || 'Не выбрано',
-                format: document.getElementById('format').value,
-                months: parseInt(document.getElementById('form-months')?.value) || 1,
+                format: format,
+                months: months,
                 donetsk_programs: donetskPrograms,
                 makeevka_programs: makeevkaPrograms,
+                totalPrice: finalTotalPrice,
                 comment: document.getElementById('comment').value,
                 source: 'form'
             };

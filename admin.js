@@ -193,6 +193,7 @@ function createLeadRow(lead) {
         <td>${lead.phone}</td>
         <td>${cityName}</td>
         <td>${_formatPrograms(lead)}</td>
+        <td>${lead.totalPrice ? lead.totalPrice.toLocaleString('ru-RU') + ' ₽' : '—'}</td>
         <td>${formatName}</td>
         <td>
             <select class="status-select" data-lead-id="${lead.id}">
@@ -306,6 +307,10 @@ function showLeadModal(leadId) {
         <div class="detail-row">
             <div class="detail-label">Адресные программы</div>
             <div class="detail-value">${_formatPrograms(lead)}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Общая сумма</div>
+            <div class="detail-value"><strong>${lead.totalPrice ? lead.totalPrice.toLocaleString('ru-RU') + ' ₽' : '—'}</strong></div>
         </div>
         <div class="detail-row">
             <div class="detail-label">Формат</div>

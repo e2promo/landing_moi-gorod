@@ -34,6 +34,8 @@ const LeadStorage = {
                 comment: leadData.comment || '',
                 donetsk_programs: leadData.donetsk_programs || 0,
                 makeevka_programs: leadData.makeevka_programs || 0,
+                totalPrice: leadData.totalPrice || 0,
+                months: leadData.months || 1,
                 status: 'new',
                 source: leadData.source || 'form'
             };

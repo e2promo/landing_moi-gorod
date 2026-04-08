@@ -626,6 +626,8 @@
                                 placeholder="Расскажите о вашем бизнесе или задайте вопрос"></textarea>
                         </div>
 
+                        <input type="hidden" id="form-total-price" name="total-price">
+
                         <button type="submit" class="cta-button cta-primary full-width">Получить расчет</button>
 
                         <p class="form-privacy">Нажимая кнопку, вы соглашаетесь на обработку персональных данных</p>
@@ -714,8 +716,8 @@
             const heroBannerWrap = document.getElementById('hero-banner-wrap');
             if (heroBannerImage) {
                 // Use the original image path; ensure fallback is set
-                if (!heroBannerImage.src || heroBannerImage.src.endsWith('img/lift.png')) {
-                    heroBannerImage.src = 'lift.png';
+                if (!heroBannerImage.src || heroBannerImage.src.endsWith('img/lift.png') || heroBannerImage.src.endsWith('lift.png')) {
+                    heroBannerImage.src = 'lift.jpeg';
                 }
                 // Show wrapper
                 if (heroBannerWrap) {
@@ -724,8 +726,8 @@
                 // Optional error handler to guarantee fallback
                 heroBannerImage.onerror = function () {
                     // If the image fails to load, ensure fallback is applied
-                    if (!this.src.endsWith('lift.png')) {
-                        this.src = 'lift.png';
+                    if (!this.src.endsWith('lift.jpeg')) {
+                        this.src = 'lift.jpeg';
                     }
                 };
             }
